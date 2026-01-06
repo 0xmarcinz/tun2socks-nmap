@@ -60,3 +60,19 @@ Welcome and feel free to ask any questions at [Discussions](https://github.com/x
 ## Stargazers over time
 
 [![Stargazers over time](https://starchart.cc/xjasonlyu/tun2socks.svg)](https://starchart.cc/xjasonlyu/tun2socks)
+
+## Building notes
+
+ Install QEMU (Debian/macOS)
+   sudo apt install qemu-user-static binfmt-support
+
+1. Build AMD64
+   
+docker run --rm -v "$PWD":/go/src/app -w /go/src/app golang:1.20 \
+  bash -c "git config --global --add safe.directory /go/src/app && CGO_ENABLED=0 go build -ldflags '-w -s' -o tun2socks-amd64 ."
+
+3. Build ARM64
+   
+docker run --rm -v "$PWD":/go/src/app -w /go/src/app --platform linux/arm64 golang:1.20 \
+  bash -c "git config --global --add safe.directory /go/src/app && CGO_ENABLED=0 go build -ldflags '-w -s' -o tun2socks-arm64 ."
+
